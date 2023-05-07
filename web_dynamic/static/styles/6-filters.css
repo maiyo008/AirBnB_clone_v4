@@ -69,6 +69,12 @@ button:hover {
     width: 0px;
 }
 
+div.line {
+    display: flex;
+}
+div.line input {
+    margin-bottom: 10px;
+}
 .amenities .popover {
     padding: 10px 0;
     margin-left: -5px;
@@ -91,7 +97,7 @@ button:hover {
     padding: 4px;
     padding-left: 10px;
 }
-.amenities .popover ul li input {
+.popover ul li input {
     margin-right: 10px;
 }
 
