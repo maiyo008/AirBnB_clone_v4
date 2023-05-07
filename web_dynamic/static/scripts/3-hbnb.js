@@ -25,42 +25,26 @@ $(document).ready(function () {
     }
   });
   $.ajax({
-    type: "POST",
-    url: "http://localhost:5001/api/v1/places_search/",
+    url: 'http://localhost:5001/api/v1/places_search',
+    type: 'POST',
+    contentType: 'application/json',
     data: JSON.stringify({}),
-    contentType: "application/json",
     success: function(response) {
-      var places = response;
-      var $placesSection = $("section.places");
-      $placesSection.empty(); // Clear any existing places
-  
-      places.forEach(function(place) {
-        var $article = $("<article>");
-      var $titleBox = $("<div>").addClass("title_box");
-      var $title = $("<h2>").text(place.name);
-      var $priceByNight = $("<div>").addClass("price_by_night").text("$" + place.price_by_night);
-      var $information = $("<div>").addClass("information");
-      var $maxGuest = $("<div>").addClass("max_guest").text(place.max_guest + " Guest" + (place.max_guest != 1 ? "s" : ""));
-      var $numberRooms = $("<div>").addClass("number_rooms").text(place.number_rooms + " Bedroom" + (place.number_rooms != 1 ? "s" : ""));
-      var $numberBathrooms = $("<div>").addClass("number_bathrooms").text(place.number_bathrooms + " Bathroom" + (place.number_bathrooms != 1 ? "s" : ""));
-      //var $user = $("<div>").addClass("user").html("<b>Owner:</b> " + place.user.first_name + " " + place.user.last_name);
-      var $description = $("<div>").addClass("description").html(place.description);
-
-      $titleBox.append($title);
-      $titleBox.append($priceByNight);
-      $information.append($maxGuest);
-      $information.append($numberRooms);
-      $information.append($numberBathrooms);
-      $article.append($titleBox);
-      $article.append($information);
-      //$article.append($user);
-      $article.append($description);
-      $placesSection.append($article);
-      });
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error("Error: " + errorThrown);
+      for (let place of response) {
+        let article = $('<article>').addClass('place');
+	let titleBox = $('<div>').addClass('title_box');
+	let title = $('<h2>').text(place.name);
+	let price = $('<div>').addClass('price_by_night').text('$' + place.price_by_night);
+	titleBox.append(title).append(price);
+	let info = $('<div>').addClass('information');
+	let maxGuest = $('<div>').addClass('max_guest').html(place.max_guest + ' Guest' + (place.max_guest !== 1 ? 's' : ''));
+	let numRooms = $('<div>').addClass('number_rooms').html(place.number_rooms + ' Bedroom' + (place.number_rooms !== 1 ? 's' : ''));
+	let numBaths = $('<div>').addClass('number_bathrooms').html(place.number_bathrooms + ' Bathroom' + (place.number_bathrooms !== 1 ? 's' : ''));
+	info.append(maxGuest).append(numRooms).append(numBaths);
+	let desc = $('<div>').addClass('description').text(place.description);
+	article.append(titleBox).append(info).append(desc);
+	$('section.places').append(article);
+      }
     }
   });
-  
 });
