@@ -24,7 +24,6 @@ $(document).ready(function () {
       $('.amenities > h4').text("\xa0");
     }
   });
-  
   $.ajax({
     url: 'http://localhost:5001/api/v1/places_search',
     type: 'POST',
